@@ -90,8 +90,9 @@ namespace WindowsFormsAppTagdij
                 decimal szulev = numericUpDownSzulev.Value;
                 decimal irszam = numericUpDownIrszam.Value;
                 string orsz = textBoxOrsz.Text;
-                command.CommandText="INSERT INTO `ugyfel`(`azon`, `nev`, `szulev`, `irszam`, `orsz`) VALUES (NULL, @nev, @szulev, @irszam, @orsz)";
                 command.Parameters.Clear();
+                command.CommandText="INSERT INTO `ugyfel`(`azon`, `nev`, `szulev`, `irszam`, `orsz`) VALUES (NULL, @nev, @szulev, @irszam, @orsz)";
+                
                 command.Parameters.AddWithValue("@nev", nev);
                 command.Parameters.AddWithValue("@szulev", szulev);
                 command.Parameters.AddWithValue("@irszam", irszam);
@@ -132,7 +133,8 @@ namespace WindowsFormsAppTagdij
                 decimal szulev = numericUpDownSzulev.Value;
                 decimal irszam = numericUpDownIrszam.Value;
                 string orsz = textBoxOrsz.Text;
-                command.CommandText = "DELETE FROM `ugyfel` WHERE azon=@azon";
+                command.CommandText = "SET FOREIGN_KEY_CHECKS=OFF;" +
+                    "DELETE FROM `ugyfel` WHERE azon=@azon;";
                 command.Parameters.Clear();
                 command.Parameters.AddWithValue("@azon", azon);
                 command.Parameters.AddWithValue("@nev", nev);
@@ -174,8 +176,10 @@ namespace WindowsFormsAppTagdij
                 decimal szulev = numericUpDownSzulev.Value;
                 decimal irszam = numericUpDownIrszam.Value;
                 string orsz = textBoxOrsz.Text;
-                command.CommandText = "UPDATE `ugyfel` SET `nev`='@nev',`szulev`='@szulev',`irszam`='@irszam',`orsz`='@orsz' WHERE 1";
+                string azon = textBoxAzon.Text.ToString();
+                command.CommandText = "UPDATE `ugyfel` SET `nev`='@nev',`szulev`='@szulev',`irszam`='@irszam',`orsz`='@orsz' WHERE azon=@azon";
                 command.Parameters.Clear();
+                command.Parameters.AddWithValue("@azon", azon);
                 command.Parameters.AddWithValue("@nev", nev);
                 command.Parameters.AddWithValue("@szulev", szulev);
                 command.Parameters.AddWithValue("@irszam", irszam);
